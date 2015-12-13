@@ -86,10 +86,28 @@ public class EarthquakeCityMap extends PApplet {
 	    // Here is an example of how to use Processing's color method to generate 
 	    // an int that represents the color yellow.  
 	    int yellow = color(255, 255, 0);
+	    int my_color3 = color(76,145,57);
+	    int my_color1 = color(47,98,237);
+	    int my_color2 = color(173,95,68);
 	    
 	    //TODO: Add code here as appropriate
 	    for(PointFeature feature : earthquakes){
-	    	markers.add(createMarker(feature));
+	    	Object magObj = feature.getProperty("magnitude");
+	    	float mag = Float.parseFloat(magObj.toString());
+	    	if(mag<=3){
+	    		SimplePointMarker spm = createMarker(feature,my_color1,5);
+	    		markers.add(spm);
+	    	}else if(mag>3&&mag<=5){
+	    		SimplePointMarker spm = createMarker(feature,my_color2,10);
+	    		markers.add(spm);
+	    	}else if(mag>5&&mag<7){
+	    		SimplePointMarker spm = createMarker(feature,my_color3,15);
+	    		markers.add(spm);
+	    	}else{
+	    		SimplePointMarker spm = createMarker(feature,yellow,20);
+	    		markers.add(spm);
+	    	}	
+
 	    }
 	    
 	    map.addMarkers(markers);
@@ -99,11 +117,12 @@ public class EarthquakeCityMap extends PApplet {
 	// A suggested helper method that takes in an earthquake feature and 
 	// returns a SimplePointMarker for that earthquake
 	// TODO: Implement this method and call it from setUp, if it helps
-	private SimplePointMarker createMarker(PointFeature feature)
+	private SimplePointMarker createMarker(PointFeature feature,int color,float radius)
 	{
 		// finish implementing and use this method, if it helps.
 		SimplePointMarker spm = new SimplePointMarker(feature.getLocation());
-		spm.setRadius(10);
+		spm.setColor(color);
+		spm.setRadius(radius);
 		return spm;
 	}
 	
@@ -119,6 +138,22 @@ public class EarthquakeCityMap extends PApplet {
 	private void addKey() 
 	{	
 		// Remember you can use Processing's graphics methods here
-	
+		fill(153);
+		rect(35,50,130,200,9);
+		fill(47,98,237);
+		ellipse(55,120,5,5);
+		fill(173,95,68);
+		ellipse(55,150,10,10);
+		fill(76,145,57);
+		ellipse(55,180,15,15);
+		fill(255,255,0);
+		ellipse(55,210,20,20);
+		fill(0,0,0);
+		text("Earthquake Key",55,80);
+		text("3.0- Magnitude",65,130);
+		text("3.0+ Magnitude",65,160);
+		text("5.0+ Magnitude",65,190);
+		text("7.0+ Magnitude",65,220);
 	}
+
 }
