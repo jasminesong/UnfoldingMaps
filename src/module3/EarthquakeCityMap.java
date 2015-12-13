@@ -88,6 +88,11 @@ public class EarthquakeCityMap extends PApplet {
 	    int yellow = color(255, 255, 0);
 	    
 	    //TODO: Add code here as appropriate
+	    for(PointFeature feature : earthquakes){
+	    	markers.add(createMarker(feature));
+	    }
+	    
+	    map.addMarkers(markers);
 	    
 	}
 		
