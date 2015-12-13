@@ -102,7 +102,10 @@ public class EarthquakeCityMap extends PApplet {
 	    for(PointFeature feature : earthquakes) {
 		  //check if LandQuake
 		  if(isLand(feature)) {
-		    quakeMarkers.add(new LandQuakeMarker(feature));
+			  LandQuakeMarker lqm = new LandQuakeMarker(feature);
+			  lqm.setProperty("country", feature.getProperty("country"));
+			  quakeMarkers.add(lqm);
+		    
 		  }
 		  // OceanQuakes
 		  else {
@@ -165,6 +168,12 @@ public class EarthquakeCityMap extends PApplet {
 		// IMPLEMENT THIS: loop over all countries to check if location is in any of them
 		
 		// TODO: Implement this method using the helper method isInCountry
+		for(Marker marker:countryMarkers){
+			if(isInCountry(earthquake,marker)){
+				
+				return true;
+			}
+		}
 		
 		// not inside any country
 		return false;
@@ -179,6 +188,21 @@ public class EarthquakeCityMap extends PApplet {
 	private void printQuakes() 
 	{
 		// TODO: Implement this method
+		int ocean_num=0;
+		for(Marker marker:countryMarkers){
+			int num = 0;
+			for(Marker q_marker:quakeMarkers){
+				
+				if(marker.getProperty("name")==q_marker.getProperty("country")){
+					num++;
+				}else{
+					ocean_num++;
+				}
+			}
+			System.out.println(marker.getProperty("name")+"----"+num);
+		}
+		
+		System.out.println("Ocean quakes----"+ocean_num);
 	}
 	
 	
