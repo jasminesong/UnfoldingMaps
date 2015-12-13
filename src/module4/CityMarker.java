@@ -12,7 +12,7 @@ import processing.core.PGraphics;
  * @author Your name here
  *
  */
-public class CityMarker extends SimplePointMarker {
+public class CityMarker extends SimplePointMarker  {
 	
 	// The size of the triangle marker
 	// It's a good idea to use this variable in your draw method
@@ -40,9 +40,13 @@ public class CityMarker extends SimplePointMarker {
 	 */
 	public void draw(PGraphics pg, float x, float y) {
 		// Save previous drawing style
+		//PImage city_img = loadImage("City_Building_icon.png");
+
 		pg.pushStyle();
 		
 		// TODO: Add code to draw a triangle to represent the CityMarker
+		pg.fill(204, 102, 0);
+		pg.ellipse(x,y,5,5);
 		
 		// Restore previous drawing style
 		pg.popStyle();

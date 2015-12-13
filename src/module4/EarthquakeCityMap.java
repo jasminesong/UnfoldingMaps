@@ -80,7 +80,7 @@ public class EarthquakeCityMap extends PApplet {
 		//earthquakesURL = "test2.atom";
 		
 		// WHEN TAKING THIS QUIZ: Uncomment the next line
-		//earthquakesURL = "quiz1.atom";
+		earthquakesURL = "quiz1.atom";
 		
 		
 		// (2) Reading in earthquake data and geometric properties
@@ -188,21 +188,25 @@ public class EarthquakeCityMap extends PApplet {
 	private void printQuakes() 
 	{
 		// TODO: Implement this method
-		int ocean_num=0;
+		int land_num=0;
 		for(Marker marker:countryMarkers){
+			
 			int num = 0;
 			for(Marker q_marker:quakeMarkers){
 				
 				if(marker.getProperty("name")==q_marker.getProperty("country")){
 					num++;
-				}else{
-					ocean_num++;
-				}
+					land_num++;
+				}	
 			}
-			System.out.println(marker.getProperty("name")+"----"+num);
+			if(num>0){
+				System.out.println(marker.getProperty("name")+"----"+num);
+			}
 		}
-		
-		System.out.println("Ocean quakes----"+ocean_num);
+		System.out.println(" quakes----"+quakeMarkers.size());
+		System.out.println("land quakes----"+(land_num));
+		System.out.println("Ocean quakes----"+(quakeMarkers.size()-land_num));
+
 	}
 	
 	
