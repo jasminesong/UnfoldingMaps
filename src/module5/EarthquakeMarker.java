@@ -59,6 +59,7 @@ public abstract class EarthquakeMarker extends CommonMarker
 	@Override
 	public void drawMarker(PGraphics pg, float x, float y) {
 		// save previous styling
+		System.out.println("in EarthquakeMarker drawMarker");
 		pg.pushStyle();
 			
 		// determine color of marker from depth
@@ -94,6 +95,7 @@ public abstract class EarthquakeMarker extends CommonMarker
 	public void showTitle(PGraphics pg, float x, float y)
 	{
 		// TODO: Implement this method
+		pg.text(this.getTitle(), x, y);
 		
 	}
 
