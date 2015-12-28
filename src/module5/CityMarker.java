@@ -71,7 +71,7 @@ public class CityMarker extends CommonMarker {
 	@Override
 	public void drawMarker(PGraphics pg, float x, float y) {
 		// TODO Auto-generated method stub
-		System.out.print("in cityMarker drawMarker");
+		//System.out.print("in cityMarker drawMarker");
 		// Save previous drawing style
 				pg.pushStyle();
 				
@@ -83,4 +83,7 @@ public class CityMarker extends CommonMarker {
 				pg.popStyle();
 		
 	}
+	
+	
+	
 }

@@ -1,7 +1,6 @@
 package module6;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
@@ -75,7 +74,7 @@ public class EarthquakeCityMap extends PApplet {
 		else {
 			map = new UnfoldingMap(this, 200, 50, 650, 600, new Google.GoogleMapProvider());
 			// IF YOU WANT TO TEST WITH A LOCAL FILE, uncomment the next line
-		    //earthquakesURL = "2.5_week.atom";
+		    earthquakesURL = "2.5_week.atom";
 		}
 		MapUtils.createDefaultEventDispatcher(this, map);
 		
@@ -85,7 +84,7 @@ public class EarthquakeCityMap extends PApplet {
 		//earthquakesURL = "test2.atom";
 		
 		// Uncomment this line to take the quiz
-		//earthquakesURL = "quiz2.atom";
+		earthquakesURL = "quiz2.atom";
 		
 		
 		// (2) Reading in earthquake data and geometric properties
@@ -124,7 +123,7 @@ public class EarthquakeCityMap extends PApplet {
 	    map.addMarkers(quakeMarkers);
 	    map.addMarkers(cityMarkers);
 	    
-	    
+	    sortAndPrint(50);
 	}  // End setup
 	
 	
@@ -408,6 +407,25 @@ public class EarthquakeCityMap extends PApplet {
 			return true;
 		}
 		return false;
+	}
+	
+	private void sortAndPrint(int numToPrint) {
+		Marker[] qMarkers = new Marker[this.quakeMarkers.size()];
+		this.quakeMarkers.toArray(qMarkers);
+		for(int i=0; i<qMarkers.length; i++) {
+			for(int j=i+1; j<qMarkers.length; j++) {
+				if(((EarthquakeMarker)qMarkers[j]).compareTo((EarthquakeMarker)qMarkers[i]) < 0) {
+					Marker tmp = qMarkers[i];
+					qMarkers[i] = qMarkers[j];
+					qMarkers[j] = tmp;
+				}
+			}
+		}
+		for(int i=0; i<numToPrint && i<qMarkers.length; i++) {
+			//how to print?
+
+			System.out.println(((EarthquakeMarker)qMarkers[i]).getMagnitude());
+				}
 	}
 
 }

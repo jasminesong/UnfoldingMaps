@@ -61,6 +61,7 @@ public class EarthquakeCityMap extends PApplet {
 	// NEW IN MODULE 5
 	private CommonMarker lastSelected;
 	private CommonMarker lastClicked;
+	private CommonMarker lastClickedMarker;
 	
 	public void setup() {		
 		// (1) Initializing canvas and map tiles
@@ -170,8 +171,56 @@ public class EarthquakeCityMap extends PApplet {
 		// TODO: Implement this method
 		// Hint: You probably want a helper method or two to keep this code
 		// from getting too long/disorganized
+		// clear the last selection
+		if(lastClicked == lastClickedMarker){
+			unhideMarkers();
+		}
+		
+		for(Marker m :cityMarkers){
+			if(m.isInside(map, mouseX, mouseY)){
+				lastClicked =(CommonMarker)m;
+			}
+		}
+		
+		for(Marker m :quakeMarkers){
+			if(m.isInside(map, mouseX, mouseY)){
+				lastClicked =(CommonMarker)m;
+			}
+		}
+		
+		
+				if(lastClicked!=null){
+					lastClickedMarker = lastClicked;
+					if(quakeMarkers.contains(lastClicked)){ //if clicked is quake
+						System.out.print("quake");
+						hideMarkers();
+						lastClicked.setHidden(false);
+						int n=0;
+						for(Marker cm:cityMarkers){
+							System.out.println(n++);
+							if(inThreatCircle(cm,lastClicked)){
+								System.out.println("yes");
+								cm.setHidden(false);
+							}
+						}
+					}else{		   							//if clicked is city
+						hideMarkers();
+						lastClicked.setHidden(false);
+						for(Marker qm:quakeMarkers){
+							if(inThreatCircle(lastClicked,qm)){
+								qm.setHidden(false);
+							}
+						}
+					}
+				}
 	}
-	
+
+	public boolean inThreatCircle(Marker city,Marker quake){
+		if(quake.getDistanceTo(city.getLocation())<=((EarthquakeMarker) quake).threatCircle()){
+			return true;
+		}
+		return false;
+	}
 	
 	// loop over and unhide all markers
 	private void unhideMarkers() {
@@ -181,6 +230,16 @@ public class EarthquakeCityMap extends PApplet {
 			
 		for(Marker marker : cityMarkers) {
 			marker.setHidden(false);
+		}
+	}
+	
+	private void hideMarkers(){
+		for(Marker marker : quakeMarkers) {
+			marker.setHidden(true);
+		}
+			
+		for(Marker marker : cityMarkers) {
+			marker.setHidden(true);
 		}
 	}
 	
